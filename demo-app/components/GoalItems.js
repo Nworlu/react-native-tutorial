@@ -20,10 +20,10 @@ const styles = StyleSheet.create({
   goalItem: {
     backgroundColor: "purple",
     margin: 8,
-    padding: 8,
     borderRadius: 10,
   },
   goalText: {
+    padding: 8,
     color: "white",
   },
   pressedItem: {

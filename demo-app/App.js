@@ -7,11 +7,21 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { StatusBar } from "expo-status-bar";
+
 import GoalInput from "./components/GoalInput";
 import GoalItems from "./components/GoalItems";
 
 export default function App() {
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   const [courseGoal, setCourseGoal] = useState([]);
+
+  function startAddGoalHandler() {
+    setModalIsVisible(true);
+  }
+  function endAddGoalHandler() {
+    setModalIsVisible(false);
+  }
   function addGoalHandler(enteredText) {
     setCourseGoal((currentCourseGoal) => [
       ...currentCourseGoal,
@@ -22,30 +32,41 @@ export default function App() {
     setCourseGoal((currentCourseGoal) => {
       return currentCourseGoal.filter((goal) => goal.id !== id);
     });
+    endAddGoalHandler();
   }
   return (
-    <View style={styles.appContainer}>
-      <GoalInput onAddGoal={addGoalHandler} />
-      <View style={styles.goalsContainer}>
-        <FlatList
-          data={courseGoal}
-          renderItem={(itemData) => {
-            return (
-              <GoalItems
-                onDelete={deleteGoalHandler}
-                id={itemData.item.id}
-                text={itemData.item.text}
-              />
-            );
-          }}
-          keyExtractor={(item, index) => {
-            console.log(item);
-            console.log(index);
-            return item.id;
-          }}
+    <>
+      <StatusBar style="light" />
+      <View style={styles.appContainer}>
+        <Button
+          title="Add New Goal"
+          color="#a065ec"
+          onPress={startAddGoalHandler}
         />
+        <GoalInput
+          onCancel={endAddGoalHandler}
+          visible={modalIsVisible}
+          onAddGoal={addGoalHandler}
+        />
+        <View style={styles.goalsContainer}>
+          <FlatList
+            data={courseGoal}
+            renderItem={(itemData) => {
+              return (
+                <GoalItems
+                  onDelete={deleteGoalHandler}
+                  id={itemData.item.id}
+                  text={itemData.item.text}
+                />
+              );
+            }}
+            keyExtractor={(item, index) => {
+              return item.id;
+            }}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
