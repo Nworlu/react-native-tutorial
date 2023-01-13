@@ -8,6 +8,7 @@ function StartGameScreen() {
         style={styles.numberInput}
         keyboardType="number-pad"
         autoCapitalize="none"
+        autoCorrect={false}
         maxLength={2}
       />
       <PrimaryButton>Reset</PrimaryButton>
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     marginTop: 100,
     marginHorizontal: 24,
     padding: 16,
-    backgroundColor: "#72063c",
+    backgroundColor: "#4e0329",
     borderRadius: 8,
     elevation: 8,
     shadowColor: "black",
